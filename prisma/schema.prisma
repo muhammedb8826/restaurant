@@ -31,6 +31,7 @@ model Category {
   updated_at DateTime @updatedAt
 
   orders     Order[] 
+  menuItems  MenuItem[]
 }
 
 model Order {
@@ -45,3 +46,14 @@ model Order {
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
+model MenuItem {
+  id         String   @id @default(cuid())
+  name       String
+  price      Float
+  description String?
+  categoryId String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}

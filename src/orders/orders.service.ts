@@ -23,12 +23,15 @@ export class OrdersService {
   }
 
   async findAll() {
-    return await this.prisma.order.findMany();
+    return await this.prisma.order.findMany({
+      include: { waiter: true, category: true }
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.order.findUnique({
-      where: { id }
+      where: { id },
+      include: { waiter: true, category: true }
     })
   }
 

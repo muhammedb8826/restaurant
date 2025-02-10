@@ -13,12 +13,15 @@ export class WaitersService {
   }
 
   async findAll() {
-    return await this.prisma.waiter.findMany();
+    return await this.prisma.waiter.findMany({
+      include: { orders: true }
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.waiter.findUnique({
-      where: { id }
+      where: { id },
+      include: { orders: true }
     })
   }
 

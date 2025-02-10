@@ -20,12 +20,15 @@ export class MenuService {
   }
 
   async findAll() {
-    return await this.prisma.menuItem.findMany();
+    return await this.prisma.menuItem.findMany({
+      include: { category: true },
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.menuItem.findUnique({
       where: { id },
+      include: { category: true },
     });
   }
 

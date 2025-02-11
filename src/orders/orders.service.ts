@@ -3,6 +3,7 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+
 @Injectable()
 export class OrdersService {
   constructor(private prisma: PrismaService){}
@@ -12,11 +13,15 @@ export class OrdersService {
       ...createOrderDto,
       waiterId: undefined,
       categoryId: undefined,
+      menuItemId: undefined,
       waiter: {
         connect: { id: createOrderDto.waiterId }
       },
       category: {
         connect: { id: createOrderDto.categoryId }
+      },
+      menuItem: {
+        connect: { id:createOrderDto.menuItemId }
       }
       }
     })
@@ -24,14 +29,14 @@ export class OrdersService {
 
   async findAll() {
     return await this.prisma.order.findMany({
-      include: { waiter: true, category: true }
+      include: { waiter: true, category: true, menuItem: true }
     });
   }
 
   async findOne(id: string) {
     return await this.prisma.order.findUnique({
       where: { id },
-      include: { waiter: true, category: true }
+      include: { waiter: true, category: true, menuItem: true }
     })
   }
 

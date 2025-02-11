@@ -39,11 +39,13 @@ model Order {
   priority   Int
   waiterId   String
   categoryId String
+  menuItemId String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   waiter     Waiter   @relation(fields: [waiterId], references: [id], onDelete: Cascade)
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
 }
 
 model MenuItem {
@@ -56,4 +58,5 @@ model MenuItem {
   updated_at DateTime @updatedAt
 
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  order      Order[]
 }
